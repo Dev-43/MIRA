@@ -1,0 +1,4 @@
+playwright
+google-generativeai
+neo4j==5.19.0
+python-dotenv

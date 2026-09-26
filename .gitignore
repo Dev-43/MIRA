@@ -1,0 +1,35 @@
+# Environment & secrets
+.env
+*.env
+*.pem
+*.key
+
+# Target SUT (separate git repository)
+flytbase-ahc-swe-qa-hackathon/
+
+# Archive & Trash
+trash/
+
+# Python cache & venv
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+
+# Node / JS
+node_modules/
+dist/
+npm-debug.log*
+
+# Playwright & Browser artifacts
+test-results/
+playwright-report/
+blob-report/
+.playwright-mcp/
+
+# OS files
+.DS_Store
+Thumbs.db
