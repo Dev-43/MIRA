@@ -261,6 +261,7 @@ def explore(
     max_pages: int = 15,
     sample_interval: float = 2.0,
     headless: bool = True,
+    warm: bool = False,
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     """Crawl target URL up to depth 3 or 15 pages.
 
@@ -268,6 +269,35 @@ def explore(
         (elements, livefields) matching the MIRA interface contracts.
     """
     site_id = _get_site_id(target_url)
+
+    # Check for warm run cache hit
+    if warm and graph.is_site_known(site_id):
+        cached_pages = graph.get_pages_for_site(site_id)
+        cached_elements = []
+        for cp in cached_pages:
+            cached_elements.extend(graph.get_elements_for_page(cp["url"]))
+        if cached_elements:
+            logger.info("Warm run cache hit: Re-using %d pre-indexed elements across %d pages.",
+                        len(cached_elements), len(cached_pages))
+            # Resample LiveFields only
+            all_livefields: List[Dict[str, Any]] = []
+            with sync_playwright() as p:
+                browser = p.chromium.launch(headless=headless)
+                context = browser.new_context(viewport={"width": 1440, "height": 900})
+                page = context.new_page()
+                for cp in cached_pages[:max_pages]:
+                    try:
+                        page.goto(cp["url"], wait_until="domcontentloaded", timeout=10000)
+                        page.wait_for_timeout(1500)
+                        lfs = _detect_livefields(page, cp["url"], site_id, sample_interval=sample_interval)
+                        for lf in lfs:
+                            graph.upsert_livefield(site_id=site_id, page_url=cp["url"], livefield=lf)
+                            all_livefields.append(lf)
+                    except Exception:
+                        pass
+                browser.close()
+            return cached_elements, all_livefields
+
     graph.upsert_site(site_id, target_url)
 
     target_parsed = urlparse(target_url)

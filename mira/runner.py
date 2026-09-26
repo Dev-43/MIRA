@@ -72,6 +72,7 @@ def run_pipeline(
         max_pages=max_pages,
         sample_interval=2.0,
         headless=headless,
+        warm=warm,
     )
     logger.info("Discovered %d elements, %d livefields across site.", len(elements), len(livefields))
 

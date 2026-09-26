@@ -366,6 +366,25 @@ def is_site_known(site_id: str, driver=None) -> bool:
     return site_id in _IN_MEMORY_STORE["sites"]
 
 
+def get_pages_for_site(site_id: str, driver=None) -> List[Dict[str, Any]]:
+    """Retrieve all pages indexed for a site."""
+    drv = driver or get_driver()
+    if drv:
+        query = """
+        MATCH (s:Site {id: $site_id})-[:HAS_PAGE]->(p:Page)
+        RETURN p.id AS id, p.url AS url, p.title AS title, p.path AS path
+        """
+        try:
+            with drv.session() as session:
+                res = session.run(query, site_id=site_id)
+                return [{"id": r["id"], "url": r["url"], "title": r["title"], "path": r["path"]} for r in res]
+        except Exception:
+            pass
+
+    page_ids = _IN_MEMORY_STORE["site_pages"].get(site_id, set())
+    return [_IN_MEMORY_STORE["pages"][pid] for pid in page_ids if pid in _IN_MEMORY_STORE["pages"]]
+
+
 def clear_all(driver=None) -> None:
     """Clear graph store (used for clean testing)."""
     drv = driver or get_driver()
