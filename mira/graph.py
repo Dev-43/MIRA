@@ -51,15 +51,19 @@ class Neo4jDriverWrapper:
             return self._driver
 
         try:
-            from neo4j import GraphDatabase
-            driver = GraphDatabase.driver(self.uri, auth=(self.username, self.password))
+            from neo4j import GraphDatabase, basic_auth
+            auth_token = basic_auth(self.username, self.password)
+            driver = GraphDatabase.driver(self.uri, auth=auth_token, connection_timeout=3.0)
             driver.verify_connectivity()
+            # Verify actual query execution
+            with driver.session() as s:
+                s.run("RETURN 1").single()
             self._driver = driver
             self._is_live = True
             logger.info("Connected to Neo4j at %s", self.uri)
             return self._driver
         except Exception as e:
-            logger.warning("Neo4j offline or unavailable (%s). Using in-memory graph fallback.", e)
+            logger.warning("Neo4j unavailable or auth error (%s). Using in-memory graph fallback.", e)
             self._is_live = False
             self._driver = None
             return None
@@ -122,8 +126,11 @@ def upsert_site(site_id: str, url: str, driver=None) -> Dict[str, Any]:
         SET s.url = $url, s.last_crawled = $last_crawled
         RETURN s
         """
-        with drv.session() as session:
-            session.run(query, id=site_id, url=url, last_crawled=now_iso)
+        try:
+            with drv.session() as session:
+                session.run(query, id=site_id, url=url, last_crawled=now_iso)
+        except Exception as e:
+            logger.warning("Neo4j error in upsert_site: %s", e)
 
     # Always mirror to in-memory store
     _IN_MEMORY_STORE["sites"][site_id] = site_data
@@ -151,8 +158,11 @@ def upsert_page(site_id: str, page_id: str, url: str, title: str = "", path: str
         MERGE (s)-[:HAS_PAGE]->(p)
         RETURN p
         """
-        with drv.session() as session:
-            session.run(query, site_id=site_id, page_id=page_id, url=url, title=title, path=path)
+        try:
+            with drv.session() as session:
+                session.run(query, site_id=site_id, page_id=page_id, url=url, title=title, path=path)
+        except Exception as e:
+            logger.warning("Neo4j error in upsert_page: %s", e)
 
     # In-memory mirror
     _IN_MEMORY_STORE["pages"][page_id] = page_data
@@ -188,8 +198,11 @@ def upsert_element(site_id: str, page_url: str, element: Dict[str, Any], driver=
         MERGE (p)-[:CONTAINS_ELEMENT]->(e)
         RETURN e
         """
-        with drv.session() as session:
-            session.run(query, id=el_id, page_url=page_url, role=role, name=name, bbox=bbox_str, site_id=site_id)
+        try:
+            with drv.session() as session:
+                session.run(query, id=el_id, page_url=page_url, role=role, name=name, bbox=bbox_str, site_id=site_id)
+        except Exception as e:
+            logger.warning("Neo4j error in upsert_element: %s", e)
 
     # In-memory mirror
     _IN_MEMORY_STORE["elements"][el_id] = el_data
@@ -236,18 +249,21 @@ def upsert_livefield(site_id: str, page_url: str, livefield: Dict[str, Any], dri
         MERGE (p)-[:HAS_LIVEFIELD]->(l)
         RETURN l
         """
-        with drv.session() as session:
-            session.run(
-                query,
-                id=lf_id,
-                page_url=page_url,
-                region_bbox=region_bbox_str,
-                label_text=label_text,
-                last_value_hash=last_value_hash,
-                last_changed_ts=last_changed_ts,
-                freshness_claim=freshness_claim,
-                site_id=site_id,
-            )
+        try:
+            with drv.session() as session:
+                session.run(
+                    query,
+                    id=lf_id,
+                    page_url=page_url,
+                    region_bbox=region_bbox_str,
+                    label_text=label_text,
+                    last_value_hash=last_value_hash,
+                    last_changed_ts=last_changed_ts,
+                    freshness_claim=freshness_claim,
+                    site_id=site_id,
+                )
+        except Exception as e:
+            logger.warning("Neo4j error in upsert_livefield: %s", e)
 
     # In-memory mirror
     _IN_MEMORY_STORE["livefields"][lf_id] = lf_data

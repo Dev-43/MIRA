@@ -85,7 +85,7 @@ def check_action_efficacy(
 
             try:
                 # Capture pre-click state
-                pre_shot = page.screenshot(type="png")
+                pre_shot = page.screenshot(type="png", timeout=5000, animations="disabled")
                 loc = page.get_by_role(el.get("role", "button"), name=name).first
 
                 if not loc.is_visible(timeout=500):
@@ -96,7 +96,7 @@ def check_action_efficacy(
                 page.wait_for_timeout(1000)
 
                 # Capture post-click state
-                post_shot = page.screenshot(type="png")
+                post_shot = page.screenshot(type="png", timeout=5000, animations="disabled")
 
                 # Compare screenshots
                 if pre_shot == post_shot:

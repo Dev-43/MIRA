@@ -296,23 +296,26 @@ def generate_scenario_report(findings: List[Dict[str, Any]],
 
 
 def generate_submission(findings: List[Dict[str, Any]], 
-                        scenarios: List[Dict[str, Any]],
+                        scenarios: Optional[List[Dict[str, Any]]] = None,
                         output_dir: str = "submission",
                         video_dir: str = "evidence/videos",
                         screenshot_dir: str = "evidence/screenshots") -> str:
     """
     Generate complete hackathon evaluation submission package.
-    
-    Args:
-        findings: List of all primitive findings
-        scenarios: List of scenario configs with name, trigger, expected, mutation, video_path
-        output_dir: Output directory for submission package
-        video_dir: Directory containing scenario videos
-        screenshot_dir: Directory containing screenshots
-        
-    Returns:
-        Path to submission directory
     """
+    if not scenarios:
+        scenarios = []
+        for cat, f_list in _group_findings_by_category(findings).items():
+            scenarios.append({
+                "name": f"Autonomous Detection: {CATEGORY_LABELS.get(cat, cat)}",
+                "category": cat,
+                "target_url": f_list[0].get("target_url", "") if f_list else "",
+                "trigger": "Autonomous crawler and primitive heuristics",
+                "expected": "Normal compliant UI behavior without discrepancies",
+                "mutation": f"Observed discrepancies across {len(f_list)} elements",
+                "video_path": f_list[0].get("evidence", {}).get("video_path", "") if f_list else "",
+                "screenshots": [f.get("evidence", {}).get("screenshot_path", "") for f in f_list if f.get("evidence", {}).get("screenshot_path")],
+            })
     
     # Create output structure
     out_path = Path(output_dir)
@@ -408,6 +411,8 @@ def generate_submission(findings: List[Dict[str, Any]],
     (out_path / "README.md").write_text(readme, encoding="utf-8")
     
     return str(out_path)
+    
+generate_submission_package = generate_submission
 
 
 def generate_scenarios_summary(findings: List[Dict[str, Any]], 
