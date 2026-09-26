@@ -93,19 +93,19 @@ livefields: list[dict] = [
 | Task ID | Module / Deliverable | Target File | Assigned Owner | Status | Commit Hash |
 |---|---|---|---|---|---|
 | **Task 0** | Dev Environment & SUT Verification | `.env`, `:4010`, `:4000` | Antigravity | `COMPLETED` | Baseline ready |
-| **Task 1** | Graph Engine (Neo4j Schema) | `mira/graph.py` | Antigravity | `TODO` | — |
-| **Task 2** | Generic Web Explorer (Playwright) | `mira/explorer.py` | Antigravity | `TODO` | — |
-| **Task 3** | Auth-Gate Primitive | `mira/primitives/auth_gate.py` | **OpenCode** | `TODO` | — |
-| **Task 4** | Staleness & Freeze Primitive | `mira/primitives/staleness.py` | **OpenCode** | `TODO` | — |
-| **Task 5** | Responsive Reachability (375px) | `mira/primitives/responsive_reachability.py` | **OpenCode** | `TODO` | — |
-| **Task 6** | Multimodal Vision Judge | `mira/vision_judge.py` | Antigravity | `TODO` | — |
-| **Task 7** | Status Reality Primitive | `mira/primitives/status_reality.py` | Antigravity | `TODO` | — |
-| **Task 8** | Action Efficacy Primitive | `mira/primitives/action_efficacy.py` | Antigravity | `TODO` | — |
-| **Task 9** | Runner & Orchestration Pipeline | `mira/runner.py` | Antigravity | `TODO` | — |
-| **Task 10** | Hackathon Report Generator | `mira/reporter.py` | **OpenCode** | `TODO` | — |
-| **Task 11** | Fault Injection Control Client | `demo/control_client.py` | **OpenCode** | `TODO` | — |
-| **Task 12** | Graph Memory Path (Warm runs) | `mira/graph.py` | Antigravity | `TODO` | — |
-| **Task 13** | Video Recording & Submission Assembly| `SUBMISSION_DRAFT.md` | Joint | `TODO` | — |
+| **Task 1** | Graph Engine (Neo4j Schema) | `mira/graph.py` | Antigravity | `COMPLETED` | `1b6b5c3` |
+| **Task 2** | Generic Web Explorer (Playwright) | `mira/explorer.py` | Antigravity | `COMPLETED` | `7b1969d` |
+| **Task 3** | Auth-Gate Primitive | `mira/primitives/auth_gate.py` | **OpenCode** | `COMPLETED` | `8574bd1` |
+| **Task 4** | Staleness & Freeze Primitive | `mira/primitives/staleness.py` | **OpenCode** | `COMPLETED` | `2b73a96` |
+| **Task 5** | Responsive Reachability (375px) | `mira/primitives/responsive_reachability.py` | **OpenCode** | `COMPLETED` | `2abdefc` |
+| **Task 6** | Multimodal Vision Judge | `mira/vision_judge.py` | Antigravity | `COMPLETED` | `5ed4109` |
+| **Task 7** | Status Reality Primitive | `mira/primitives/status_reality.py` | Antigravity | `COMPLETED` | `7bd862a` |
+| **Task 8** | Action Efficacy Primitive | `mira/primitives/action_efficacy.py` | Antigravity | `COMPLETED` | `e61e900` |
+| **Task 9** | Runner & Orchestration Pipeline | `mira/runner.py` | Antigravity | `COMPLETED` | `8460842` |
+| **Task 10** | Hackathon Report Generator | `mira/reporter.py` | **OpenCode** | `COMPLETED` | `7214ff7` |
+| **Task 11** | Fault Injection Control Client | `demo/control_client.py` | **OpenCode** | `COMPLETED` | `f9ded7c` |
+| **Task 12** | Graph Memory Path (Warm runs) | `mira/graph.py` | Antigravity | `COMPLETED` | `8b67c6e` |
+| **Task 13** | Video Recording & Submission Assembly| `SUBMISSION_DRAFT.md` | Joint | `READY_FOR_RECORDING` | — |
 
 ---
 
