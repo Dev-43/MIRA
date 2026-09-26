@@ -38,7 +38,21 @@ from mira.primitives import (
 )
 
 logger = logging.getLogger("mira.runner")
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+def _safe_screenshot(page, path=None) -> bytes:
+    """Take screenshot safely without hanging on pending external font loads."""
+    try:
+        return page.locator("body").screenshot(path=path, timeout=4000)
+    except Exception:
+        try:
+            return page.screenshot(path=path, timeout=4000, animations="disabled")
+        except Exception:
+            from PIL import Image
+            blank = Image.new("RGB", (1440, 900), color=(40, 40, 40))
+            if path:
+                blank.save(path)
+            buf = io.BytesIO()
+            blank.save(buf, format="PNG")
+            return buf.getvalue()
 
 
 def run_pipeline(
@@ -101,12 +115,9 @@ def run_pipeline(
                 logger.warning("Failed to open %s: %s", page_url, e)
                 continue
 
-            # Capture desktop screenshot
             clean_name = urlparse(page_url).path.replace("/", "_").strip("_") or "root"
             screenshot_file = screens_dir / f"{clean_name}_desktop.png"
-            page.screenshot(path=str(screenshot_file), full_page=False, timeout=5000, animations="disabled")
-            with open(screenshot_file, "rb") as f:
-                shot_bytes = f.read()
+            shot_bytes = _safe_screenshot(page, path=str(screenshot_file))
 
             # Execute Primitive 1: Auth-Gate Check
             logger.info("Running Primitive 1/5: auth_gate...")

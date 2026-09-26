@@ -138,9 +138,15 @@ def _detect_livefields(
     livefields: List[Dict[str, Any]] = []
 
     try:
-        shot1_bytes = page.screenshot(type="png", timeout=5000, animations="disabled")
+        try:
+            shot1_bytes = page.locator("body").screenshot(timeout=3000)
+        except Exception:
+            shot1_bytes = page.screenshot(type="png", timeout=3000, animations="disabled")
         page.wait_for_timeout(int(sample_interval * 1000))
-        shot2_bytes = page.screenshot(type="png", timeout=5000, animations="disabled")
+        try:
+            shot2_bytes = page.locator("body").screenshot(timeout=3000)
+        except Exception:
+            shot2_bytes = page.screenshot(type="png", timeout=3000, animations="disabled")
 
         img1 = Image.open(io.BytesIO(shot1_bytes)).convert("RGB")
         img2 = Image.open(io.BytesIO(shot2_bytes)).convert("RGB")
