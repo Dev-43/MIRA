@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MIRA 2-Minute Demo Voiceover Script</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #090d16;
+      color: #f1f5f9;
+      font-family: 'Outfit', sans-serif;
+      padding: 28px 36px;
+      line-height: 1.6;
+      max-width: 840px;
+      margin: 0 auto;
+    }
+    .header-box {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 22px;
+      color: #00f2fe;
+      margin-bottom: 6px;
+    }
+    .meta-bar {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .meta-bar strong { color: #fff; }
+    .cue-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid #00f2fe;
+      padding: 16px 20px;
+      margin-bottom: 18px;
+      border-radius: 0 8px 8px 0;
+    }
+    .time-tag {
+      font-family: 'JetBrains Mono', monospace;
+      color: #00f2fe;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .action-cue {
+      color: #fbbf24;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 4px 0 8px;
+      background: rgba(251, 191, 36, 0.08);
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .speech-text {
+      font-size: 15px;
+      color: #e2e8f0;
+      line-height: 1.65;
+    }
+    .speech-text mark {
+      background: rgba(0, 242, 254, 0.15);
+      color: #38bdf8;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-box">
+    <h1>🎙️ MIRA: 2-Minute Demo Voiceover Script</h1>
+    <div class="meta-bar">
+      <span>Duration: <strong>2:00 Min</strong></span>
+      <span>Target Pace: <strong>~135 words/min</strong></span>
+      <span>Scope: <strong>Visual Occlusion Bug & Self-Healing Loop</strong></span>
+    </div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="cue-card">
+    <div class="time-tag">[00:00 - 00:20] • Introduction & The Automation Blindspot</div>
+    <div class="action-cue">👉 SCREEN ACTION: Show Tab 1 ("L1 Self-Healing Closed Loop") with "Baseline" button active.</div>
+    <div class="speech-text">
+      "Welcome. Standard automated tests pass as long as an element exists in the DOM. But human users interact with what is <mark>visually rendered on screen</mark>. Today we demonstrate MIRA: an autonomous agent that detects visual collisions, authors new regression tests dynamically, and verifies self-healed fixes with zero repeated crawl overhead."
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="cue-card">
+    <div class="time-tag">[00:20 - 00:45] • Injected Bug & Vanilla Test Blindness</div>
+    <div class="action-cue">👉 SCREEN ACTION: Click "Injected Bug" button (shows red emergency banner covering Drone 1).</div>
+    <div class="speech-text">
+      "Here, we inject a common frontend bug: a floating alert banner with <mark>z-index 9999</mark> drops directly over our Drone 1 control row. In traditional Playwright or Cypress, calling <code>.is_visible()</code> or <code>.click()</code> passes green in CI. But for a human operator, their mouse physically clicks the red banner—preventing them from arming the drone. Traditional automation is completely blind to this."
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="cue-card">
+    <div class="time-tag">[00:45 - 01:15] • Physical Hit-Testing Detection</div>
+    <div class="action-cue">👉 SCREEN ACTION: Click "Phase 3 • Bug Caught" on the left stepper. Point to coordinate (149, 117).</div>
+    <div class="speech-text">
+      "Now MIRA takes over. Instead of checking DOM presence, MIRA performs physical coordinate hit-testing using <mark>document.elementFromPoint</mark> at the exact center of every interactive control. It immediately discovers that coordinate (149, 117) does not hit Drone 1—it is physically intercepted by the alert banner. MIRA diagnoses a 65-pixel vertical collision with zero human intervention."
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="cue-card">
+    <div class="time-tag">[01:15 - 01:40] • Autonomous Test Synthesis</div>
+    <div class="action-cue">👉 SCREEN ACTION: Scroll down to the Synthesized Code box below the preview.</div>
+    <div class="speech-text">
+      "Next is the agentic loop. Instead of waiting for a human QA engineer to manually write a test, MIRA dynamically synthesizes a brand-new Playwright regression test script into <mark>tests/generated/</mark>. This script asserts physical hit-test coordinate integrity so this exact layout collision can never slip past CI again."
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="cue-card">
+    <div class="time-tag">[01:40 - 02:00] • Self-Healing, Verification & Repetition Avoidance</div>
+    <div class="action-cue">👉 SCREEN ACTION: Click "Healed & Verified" button. Point to top KPI card "14 probes skipped".</div>
+    <div class="speech-text">
+      "MIRA now applies an autonomous layout patch, repositioning the banner into a non-colliding floating pill at the top. All four drones and satellite terrain are completely unblocked. To verify, MIRA does not re-crawl the whole app—it runs only the targeted probe, <mark>skipping 14 redundant tests</mark> and cutting verification from 45 seconds down to 1.2 seconds. Verified, healed, and closed in 2 iterations."
+    </div>
+  </div>
+
+</body>
+</html>

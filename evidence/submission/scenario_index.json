@@ -1,0 +1,34 @@
+[
+  {
+    "id": "SCN-AUTH-001",
+    "name": "Autonomous Detection: Authentication / Access Control",
+    "category": "auth_gate",
+    "trigger": "Autonomous crawler and primitive heuristics",
+    "mutation": "Observed discrepancies across 2 elements",
+    "findings_count": 2,
+    "has_bug": false,
+    "has_security_violation": true,
+    "report": "scenarios/SCN-AUTH-001.md",
+    "video": "evidence\\videos\\page@024f059c7cad076a80e399ec1c93f276.webm",
+    "screenshots": [
+      "evidence\\screenshots\\root_desktop.png",
+      "evidence\\screenshots\\root_desktop.png"
+    ]
+  },
+  {
+    "id": "SCN-RESP-002",
+    "name": "Autonomous Detection: Responsive Layout / Mobile Reachability",
+    "category": "responsive_reachability",
+    "trigger": "Autonomous crawler and primitive heuristics",
+    "mutation": "Observed discrepancies across 2 elements",
+    "findings_count": 2,
+    "has_bug": true,
+    "has_security_violation": false,
+    "report": "scenarios/SCN-RESP-002.md",
+    "video": "evidence\\videos\\page@024f059c7cad076a80e399ec1c93f276.webm",
+    "screenshots": [
+      "evidence\\screenshots\\root_desktop.png",
+      "evidence\\screenshots\\root_desktop.png"
+    ]
+  }
+]

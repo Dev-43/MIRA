@@ -10,7 +10,7 @@ class TestExplorerAcceptance(unittest.TestCase):
 
     def test_cockpit_exploration(self):
         """Run explorer against local cockpit (:4010)."""
-        target_url = "http://localhost:4010"
+        target_url = "http://127.0.0.1:4010"
         elements, livefields = explorer.explore(
             target_url=target_url,
             max_depth=1,
@@ -29,10 +29,9 @@ class TestExplorerAcceptance(unittest.TestCase):
             self.assertIn("bbox", el)
 
         # 2. Graph must have elements stored
-        stored_elements = graph.get_elements_for_page("http://localhost:4010/")
+        stored_elements = graph.get_elements_for_page("http://127.0.0.1:4010/") or graph.get_elements_for_page("http://127.0.0.1:4010")
         if not stored_elements:
-            # Check without trailing slash
-            stored_elements = graph.get_elements_for_page("http://localhost:4010")
+            stored_elements = graph.get_elements_for_page("http://localhost:4010/") or graph.get_elements_for_page("http://localhost:4010")
         self.assertGreater(len(stored_elements), 0, "Graph must store discovered elements")
 
         # 3. LiveFields should be detected or validated

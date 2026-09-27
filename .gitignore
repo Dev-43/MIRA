@@ -7,8 +7,16 @@
 # Target SUT (separate git repository)
 flytbase-ahc-swe-qa-hackathon/
 
-# Archive & Trash
+# Archive, Scratch & Trash
 trash/
+scratch/
+
+# Media & Raw video recordings
+*.mp4
+*.webm
+*.mp3
+*.mov
+L1_submission/
 
 # Python cache & venv
 __pycache__/
@@ -29,6 +37,7 @@ test-results/
 playwright-report/
 blob-report/
 .playwright-mcp/
+.opencode/
 
 # OS files
 .DS_Store

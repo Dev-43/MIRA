@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-09-26 12:38:30",
+  "cockpit_desktop": {
+    "url": "http://localhost:4010",
+    "title": "FlytBase Cockpit",
+    "screenshot": "d:\\MIRA\\evidence\\cockpit_desktop.png",
+    "visible_buttons": [
+      "2D",
+      "3D"
+    ],
+    "visible_headings": [
+      "DEVICES",
+      "DRONE TELEMETRY \u00b7 DRONE 1\nstandby"
+    ],
+    "status_badges": [
+      "socket connected"
+    ],
+    "aria_snapshot": "- banner:\n  - text: FlytBase Cockpit socket connected\n  - link \"Control panel \u2192\":\n    - /url: http://localhost:4000/dashboard\n- complementary:\n  - heading \"Devices\" [level=2]\n  - list:\n    - listitem: Drone 1 Dock 1 dock closed standby\n    - listitem: Drone 2 Dock 2 dock closed standby\n    - listitem: Drone 3 Dock 3 dock closed standby\n    - listitem: Drone 4 Dock 4 dock closed standby\n  - heading \"Drone Telemetry \u00b7 Drone 1 standby\" [level=2]\n  - term: Battery\n  - definition: 100 %\n  - term: Altitude RLT\n  - definition: 0.0 m\n  - term: Altitude AGL\n  - definition: 0.0 m\n  - term: Altitude ASL\n  - definition: 560.0 m\n  - term: H-Speed\n  - definition: 0.0 m/s\n  - term: V-Speed\n  - definition: 0.0 m/s\n  - term: Heading\n  - definition: 47 \u00b0\n  - term: Wind\n  - definition: NW 2.4 m/s\n  - term: Dist. from home\n  - definition: 0 m\n- main:\n  - group \"Map view\":\n    - button \"2D\"\n    - button \"3D\" [pressed]\n  - text: FPV \u00b7 Drone 1 live",
+    "console_logs": [
+      "[debug] [vite] connecting...",
+      "[debug] [vite] connected.",
+      "[info] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "[warning] \u26a0\ufe0f React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "[warning] \u26a0\ufe0f React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "[warning] [.WebGL-0x64400adf200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+      "[warning] [.WebGL-0x64400adf200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+      "[warning] [.WebGL-0x64400adf200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+      "[warning] [.WebGL-0x64400adf200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    ],
+    "extracted_text_preview": "FlytBase Cockpit\nsocket connected\nControl panel \u2192\nDEVICES\nDrone 1\nDock 1\ndock closed\nstandby\nDrone 2\nDock 2\ndock closed\nstandby\nDrone 3\nDock 3\ndock closed\nstandby\nDrone 4\nDock 4\ndock closed\nstandby\nDRONE TELEMETRY \u00b7 DRONE 1\nstandby\nBattery\n100 %\nAltitude RLT\n0.0 m\nAltitude AGL\n0.0 m\nAltitude ASL\n560.0 m\nH-Speed\n0.0 m/s\nV-Speed\n0.0 m/s\nHeading\n47 \u00b0\nWind\nNW 2.3 m/s\nDist. from home\n0 m\n2D\n3D\nFPV \u00b7 Drone 1\nlive"
+  },
+  "cockpit_mobile": {
+    "viewport": "375x667",
+    "screenshot": "d:\\MIRA\\evidence\\cockpit_mobile.png",
+    "visible_buttons": [
+      "2D",
+      "3D"
+    ],
+    "aria_snapshot": "- banner:\n  - text: FlytBase Cockpit socket connected\n  - link \"Control panel \u2192\":\n    - /url: http://localhost:4000/dashboard\n- complementary:\n  - heading \"Devices\" [level=2]\n  - list:\n    - listitem: Drone 1 Dock 1 dock closed standby\n    - listitem: Drone 2 Dock 2 dock closed standby\n    - listitem: Drone 3 Dock 3 dock closed standby\n    - listitem: Drone 4 Dock 4 dock closed standby\n  - heading \"Drone Telemetry \u00b7 Drone 1 standby\" [level=2]\n  - term: Battery\n  - definition: 100 %\n  - term: Altitude RLT\n  - definition: 0.0 m\n  - term: Altitude AGL\n  - definition: 0.0 m\n  - term: Altitude ASL\n  - definition: 560.0 m\n  - term: H-Speed\n  - definition: 0.0 m/s\n  - term: V-Speed\n  - definition: 0.0 m/s\n  - term: Heading\n  - definition: 47 \u00b0\n  - term: Wind\n  - definition: W 2.5 m/s\n  - term: Dist. from home\n  - definition: 0 m\n- main:\n  - group \"Map view\":\n    - button \"2D\"\n    - button \"3D\" [pressed]\n  - text: FPV \u00b7 Drone 1 live",
+    "extracted_text_preview": "FlytBase Cockpit\nsocket connected\nControl panel \u2192\nDEVICES\nDrone 1\nDock 1\ndock closed\nstandby\nDrone 2\nDock 2\ndock closed\nstandby\nDrone 3\nDock 3\ndock closed\nstandby\nDrone 4\nDock 4\ndock closed\nstandby\nDRONE TELEMETRY \u00b7 DRONE 1\nstandby\nBattery\n100 %\nAltitude RLT\n0.0 m\nAltitude AGL\n0.0 m\nAltitude ASL\n560.0 m\nH-Speed\n0.0 m/s\nV-Speed\n0.0 m/s\nHeading\n47 \u00b0\nWind\nW 2.5 m/s\nDist. from home\n0 m\n2D\n3D\nFPV \u00b7 Drone 1\nlive"
+  },
+  "control_dashboard": {
+    "url": "http://localhost:4000/dashboard",
+    "title": "Cockpit Control Panel",
+    "screenshot": "d:\\MIRA\\evidence\\control_dashboard.png",
+    "visible_buttons": [
+      "Start",
+      "Stop",
+      "Reset",
+      "Apply",
+      "Add drone + dock",
+      "Start all video",
+      "Stop all video",
+      "Take off",
+      "Land",
+      "Stop video",
+      "Remove",
+      "Take off",
+      "Land",
+      "Stop video",
+      "Remove",
+      "Take off",
+      "Land",
+      "Stop video",
+      "Remove",
+      "Take off",
+      "Land",
+      "Stop video",
+      "Remove"
+    ],
+    "visible_headings": [
+      "Cockpit Control Panel",
+      "SIMULATOR",
+      "ADD DRONE",
+      "DRONES",
+      "LOG"
+    ],
+    "aria_snapshot": "- banner:\n  - heading \"Cockpit Control Panel\" [level=1]\n  - text: \"connected sim: connected video: up\"\n  - link \"Open cockpit \u2197\":\n    - /url: http://localhost:4010\n- main:\n  - heading \"Simulator\" [level=2]\n  - button \"Start\"\n  - button \"Stop\"\n  - button \"Reset\"\n  - text: Speed\n  - spinbutton \"Speed\": \"1\"\n  - button \"Apply\"\n  - text: tick 5058 \u00b7 running \u00b7 1x\n  - heading \"Add drone\" [level=2]\n  - textbox \"Name (optional)\"\n  - textbox \"Latitude (optional)\"\n  - textbox \"Longitude (optional)\"\n  - button \"Add drone + dock\"\n  - button \"Start all video\"\n  - button \"Stop all video\"\n  - heading \"Drones\" [level=2]\n  - table:\n    - rowgroup:\n      - row \"Drone Status Battery Height H-speed Dist. home Video Actions\":\n        - columnheader \"Drone\"\n        - columnheader \"Status\"\n        - columnheader \"Battery\"\n        - columnheader \"Height\"\n        - columnheader \"H-speed\"\n        - columnheader \"Dist. home\"\n        - columnheader \"Video\"\n        - columnheader \"Actions\"\n    - rowgroup:\n      - row \"Drone 1 drone-1 \u00b7 dock-1 standby 100 % 0.0 m 0.0 m/s 0 m on Take off Land Stop video Remove\":\n        - cell \"Drone 1 drone-1 \u00b7 dock-1\"\n        - cell \"standby\"\n        - cell \"100 %\"\n        - cell \"0.0 m\"\n        - cell \"0.0 m/s\"\n        - cell \"0 m\"\n        - cell \"on\"\n        - cell \"Take off Land Stop video Remove\":\n          - button \"Take off\"\n          - button \"Land\" [disabled]\n          - button \"Stop video\"\n          - button \"Remove\"\n      - row \"Drone 2 drone-2 \u00b7 dock-2 standby 100 % 0.0 m 0.0 m/s 0 m on Take off Land Stop video Remove\":\n        - cell \"Drone 2 drone-2 \u00b7 dock-2\"\n        - cell \"standby\"\n        - cell \"100 %\"\n        - cell \"0.0 m\"\n        - cell \"0.0 m/s\"\n        - cell \"0 m\"\n        - cell \"on\"\n        - cell \"Take off Land Stop video Remove\":\n          - button \"Take off\"\n          - button \"Land\" [disabled]\n          - button \"Stop video\"\n          - button \"Remove\"\n      - row \"Drone 3 drone-3 \u00b7 dock-3 standby 100 % 0.0 m 0.0 m/s 0 m on Take off Land Stop video Remove\":\n        - cell \"Drone 3 drone-3 \u00b7 dock-3\"\n        - cell \"standby\"\n        - cell \"100 %\"\n        - cell \"0.0 m\"\n        - cell \"0.0 m/s\"\n        - cell \"0 m\"\n        - cell \"on\"\n        - cell \"Take off Land Stop video Remove\":\n          - button \"Take off\"\n          - button \"Land\" [disabled]\n          - button \"Stop video\"\n          - button \"Remove\"\n      - row \"Drone 4 drone-4 \u00b7 dock-4 standby 100 % 0.0 m 0.0 m/s 0 m on Take off Land Stop video Remove\":\n        - cell \"Drone 4 drone-4 \u00b7 dock-4\"\n        - cell \"standby\"\n        - cell \"100 %\"\n        - cell \"0.0 m\"\n        - cell \"0.0 m/s\"\n        - cell \"0 m\"\n        - cell \"on\"\n        - cell \"Take off Land Stop video Remove\":\n          - button \"Take off\"\n          - button \"Land\" [disabled]\n          - button \"Stop video\"\n          - button \"Remove\"\n  - group: \u25b8 Faults \u2014 break things on purpose (socket and video)\n  - heading \"Log\" [level=2]",
+    "extracted_text_preview": "Cockpit Control Panel\nconnected\nsim: connected\nvideo: up\nOpen cockpit \u2197\nSIMULATOR\nStart\nStop\nReset\nSpeed \nApply\ntick 5058 \u00b7 running \u00b7 1x\nADD DRONE\nAdd drone + dock\nStart all video\nStop all video\nDRONES\nDRONE\tSTATUS\tBATTERY\tHEIGHT\tH-SPEED\tDIST. HOME\tVIDEO\tACTIONS\nDrone 1\ndrone-1 \u00b7 dock-1\tstandby\t100 %\t0.0 m\t0.0 m/s\t0 m\ton\t\nTake off\nLand\nStop video\nRemove\n\nDrone 2\ndrone-2 \u00b7 dock-2\tstandby\t100 %\t0.0 m\t0.0 m/s\t0 m\ton\t\nTake off\nLand\nStop video\nRemove\n\nDrone 3\ndrone-3 \u00b7 dock-3\tstandby\t100 %\t0.0 m\t0.0 m/s\t0 m\ton\t\nTake off\nLand\nStop video\nRemove\n\nDrone 4\ndrone-4 \u00b7 dock-4\tstandby\t100 %\t0.0 m\t0.0 m/s\t0 m\ton\t\nTake off\nLand\nStop video\nRemove\nFAULTS \u2014 BREAK THINGS ON PURPOSE (SOCKET AND VIDEO)\nLOG"
+  }
+}

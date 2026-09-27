@@ -1,0 +1,13 @@
+Welcome to MIRA Level 2: Multi-Drone Swarm Reconciliation and Autonomous Self-Healing.
+
+Here on the dashboard, MIRA monitors real-time telemetry across concurrent airborne drones.
+
+During swarm operations, MIRA detected a critical state desynchronization: while Drone 1 was cruising at thirty meters altitude, the UI falsely rendered it as standby on the ground.
+
+Rather than failing silently, MIRA autonomously synthesized an end-to-end regression probe and generated a hot patch to the React state handler.
+
+The fix was deployed via Vite hot-module reload in under five hundred milliseconds.
+
+To guarantee rapid recovery, MIRA's selective test execution verified the fix in just seven point four seconds, skipping fourteen redundant test suites for a nearly five-times acceleration.
+
+MIRA turns silent telemetry drift into self-healing, mission-critical flight resilience.

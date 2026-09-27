@@ -1,0 +1,137 @@
+{
+  "generated_at": "2026-09-26T08:17:01.188717Z",
+  "total_findings": 4,
+  "summary": {
+    "bug": 2,
+    "security_violation": 1,
+    "needs_review": 1
+  },
+  "findings": [
+    {
+      "finding_id": "MIRA-AUTH_GATE-243991",
+      "category": "auth_gate",
+      "verdict": "security_violation",
+      "confidence": 0.85,
+      "description": "Full cockpit UI accessible at http://localhost:4010 without visible authentication/entry flow. No session indicators (live badges, real-time data) detected. This may indicate missing auth gate.",
+      "target_url": "http://localhost:4010",
+      "element_id": null,
+      "evidence": {
+        "screenshot_path": "evidence\\screenshots\\root_desktop.png",
+        "video_path": "evidence\\videos\\page@024f059c7cad076a80e399ec1c93f276.webm",
+        "reasoning": "Cockpit indicators present (telemetry, map, video) but no authentication flow elements found. No live data freshness claims detected in livefields.",
+        "telemetry_diff": null
+      },
+      "reproduction_steps": [
+        "Navigate directly to http://localhost:4010",
+        "Observe full cockpit dashboard loads without login/join prompt",
+        "Check for socket connected badge and live telemetry",
+        "Verify no authentication redirect occurs"
+      ],
+      "discovered_at": "2026-09-26T08:16:53.882078+00:00"
+    },
+    {
+      "finding_id": "MIRA-AUTH_GATE-89a26b",
+      "category": "auth_gate",
+      "verdict": "needs_review",
+      "confidence": 0.6,
+      "description": "Direct access test recommended for http://localhost:4010. Verify that accessing cockpit URL in fresh browser session redirects to auth/join flow.",
+      "target_url": "http://localhost:4010",
+      "element_id": null,
+      "evidence": {
+        "screenshot_path": "evidence\\screenshots\\root_desktop.png",
+        "video_path": "evidence\\videos\\page@024f059c7cad076a80e399ec1c93f276.webm",
+        "reasoning": "Automated direct-access test should be run by test runner",
+        "telemetry_diff": null
+      },
+      "reproduction_steps": [
+        "Open new incognito/private browser window",
+        "Navigate directly to http://localhost:4010",
+        "Observe if redirected to login/join page or if cockpit loads",
+        "If cockpit loads, verify session persistence or auth bypass"
+      ],
+      "discovered_at": "2026-09-26T08:16:53.882147+00:00"
+    },
+    {
+      "finding_id": "MIRA-RESPONSIVE_REACHABILITY-8b6f90",
+      "category": "responsive_reachability",
+      "verdict": "bug",
+      "confidence": 0.95,
+      "description": "Critical action 'Control panel \u2192' is completely outside 375x667 viewport",
+      "target_url": "http://localhost:4010",
+      "element_id": "el_4e116abfbd",
+      "evidence": {
+        "screenshot_path": "evidence\\screenshots\\root_desktop.png",
+        "video_path": "evidence\\videos\\page@024f059c7cad076a80e399ec1c93f276.webm",
+        "reasoning": "Element bbox: x=1333.5625, y=15.09375, w=90.4375, h=16.796875. Viewport: 375x667. Visible ratio: 0%. Overlapped: False. Below fold: False.",
+        "telemetry_diff": {
+          "viewport": "375x667",
+          "bbox": {
+            "x": 1333.5625,
+            "y": 15.09375,
+            "width": 90.4375,
+            "height": 16.796875
+          },
+          "visible_ratio": 0.0,
+          "fully_visible": false,
+          "overlapped": false,
+          "below_fold": false
+        }
+      },
+      "reproduction_steps": [
+        "Navigate to http://localhost:4010",
+        "Set viewport to 375x667 (mobile)",
+        "Locate critical action 'Control panel \u2192' (link)",
+        "Verify element is not reachable"
+      ],
+      "discovered_at": "2026-09-26T08:16:53.883084+00:00"
+    },
+    {
+      "finding_id": "MIRA-RESPONSIVE_REACHABILITY-de47e4",
+      "category": "responsive_reachability",
+      "verdict": "bug",
+      "confidence": 0.85,
+      "description": "Horizontal overflow detected at 375px viewport: 3 elements extend beyond viewport width. This indicates missing responsive breakpoints or fixed-width layouts.",
+      "target_url": "http://localhost:4010",
+      "element_id": "el_2bbfc74087",
+      "evidence": {
+        "screenshot_path": "evidence\\screenshots\\root_desktop.png",
+        "video_path": "evidence\\videos\\page@024f059c7cad076a80e399ec1c93f276.webm",
+        "reasoning": "Elements found with x+width > 375px. Causes horizontal scrolling on mobile, breaking usability.",
+        "telemetry_diff": {
+          "viewport_width": 375,
+          "overflow_count": 3,
+          "overflow_elements": [
+            {
+              "id": "el_2bbfc74087",
+              "name": "socket connected",
+              "x": 1209.65625,
+              "width": 111.90625,
+              "right_edge": 1321.5625
+            },
+            {
+              "id": "el_4e116abfbd",
+              "name": "Control panel \u2192",
+              "x": 1333.5625,
+              "width": 90.4375,
+              "right_edge": 1424.0
+            },
+            {
+              "id": "el_6d0eccb878",
+              "name": "2D",
+              "x": 826.0,
+              "width": 44.0,
+              "right_edge": 870.0
+            }
+          ]
+        }
+      },
+      "reproduction_steps": [
+        "Navigate to http://localhost:4010",
+        "Set viewport to 375x667",
+        "Observe horizontal scrollbar or content cut off",
+        "Check for elements extending beyond right edge"
+      ],
+      "discovered_at": "2026-09-26T08:16:53.883135+00:00"
+    }
+  ]
+}

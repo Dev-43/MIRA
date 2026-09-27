@@ -1,0 +1,110 @@
+{
+  "session_id": "L1-SESSION-1790417192",
+  "target_url": "http://127.0.0.1:4010",
+  "start_time": "2026-09-26T10:06:32.033235+00:00",
+  "phases": [
+    {
+      "phase": "Phase 1: Baseline Check",
+      "timestamp": "2026-09-26T10:06:40.106324+00:00",
+      "status": "PASSED",
+      "details": {
+        "active_elements_probed": 12,
+        "visual_occlusions_found": 0,
+        "screenshot": "evidence\\screenshots\\l1_step1_baseline.png"
+      }
+    },
+    {
+      "phase": "Phase 2: Bug Injection",
+      "timestamp": "2026-09-26T10:06:50.135254+00:00",
+      "status": "MUTATION_ACTIVE",
+      "details": {
+        "mutation": "Sticky banner overlay at (x:0, y:48, w:300, h:110) overlapping Drone 1 row",
+        "vanilla_automation_result": "DOM is_visible() returned True (BLIND to visual occlusion)",
+        "screenshot": "evidence\\screenshots\\l1_step2_bug_injected.png"
+      }
+    },
+    {
+      "phase": "Phase 3: Autonomous Detection",
+      "timestamp": "2026-09-26T10:07:08.417648+00:00",
+      "status": "BUG_DETECTED",
+      "details": {
+        "finding_id": "MIRA-VISUAL_OCCLUSION-194bcb",
+        "category": "visual_occlusion",
+        "severity": "HIGH",
+        "verdict": "BUG",
+        "description": "Visual Collision: Action 'Drone 1\nDock 1\ndock closed\nstandby' at screen coordinates (149, 117) is physically occluded by div.global-alert-banner (z-index: 9999). A human mouse click hits the overlapping layer, blocking user interaction.",
+        "evidence": {
+          "target_element": {
+            "tag": "li",
+            "text": "Drone 1\nDock 1\ndock closed\nstandby",
+            "className": "device-row selected",
+            "id": "",
+            "rect": {
+              "x": 21,
+              "y": 92.390625,
+              "width": 257,
+              "height": 49.984375
+            }
+          },
+          "occluding_element": {
+            "tag": "div",
+            "text": "\u26a0\ufe0f CAUTION: EMERGENCY FLIGHT CORRIDOR ACTIVE \u2022 RESTRICTED ZO",
+            "className": "global-alert-banner",
+            "id": "demo-critical-alert-banner",
+            "zIndex": "9999",
+            "rect": {
+              "x": 0,
+              "y": 48,
+              "width": 300,
+              "height": 110
+            }
+          },
+          "hit_coords": {
+            "x": 149.5,
+            "y": 117.3828125
+          },
+          "collision_type": "physical_hit_test_mismatch",
+          "timestamp": "2026-09-26T10:07:08.417312+00:00"
+        }
+      }
+    },
+    {
+      "phase": "Phase 4: Test Synthesis & Diagnosis",
+      "timestamp": "2026-09-26T10:07:08.419846+00:00",
+      "status": "SYNTHESIZED",
+      "details": {
+        "root_cause": "Element <div.global-alert-banner> with z-index 9999 vertically collides by 65px into interactive action <li>. pointer-events: auto on the overlay intercepts pointer events destined for the control.",
+        "synthesized_script": "tests\\generated\\test_visual_unoccluded_controls.py",
+        "asserts": "document.elementFromPoint(x, y) must resolve to interactive control, not overlay"
+      }
+    },
+    {
+      "phase": "Phase 5: Self-Healing Fix Applied",
+      "timestamp": "2026-09-26T10:07:12.059061+00:00",
+      "status": "PATCHED",
+      "details": {
+        "patch_description": "Repositioned alert banner to compact floating pill (top: 10px, centered, h: 28px)",
+        "screenshot": "evidence\\screenshots\\l1_step5_healed.png"
+      }
+    },
+    {
+      "phase": "Phase 6: Targeted Verification",
+      "timestamp": "2026-09-26T10:07:12.075634+00:00",
+      "status": "RESOLVED_AND_VERIFIED",
+      "details": {
+        "remaining_occlusions": 0,
+        "unoccluded_hit_test": true,
+        "repetition_avoidance": "Targeted component probe skipped full 15-probe crawl (14 redundant tests avoided, ~45s reduced to 1.2s)",
+        "verified": true
+      }
+    }
+  ],
+  "iterations_needed": 2,
+  "repeated_actions_avoided": 14,
+  "synthesized_tests": [
+    "tests\\generated\\test_visual_unoccluded_controls.py"
+  ],
+  "status": "COMPLETED",
+  "repetition_rationale": "Avoided rerunning the full multi-primitive suite across 3 viewports (14 probes skipped), reducing regression verification time from ~45s to 1.2s.",
+  "end_time": "2026-09-26T10:07:12.075768+00:00"
+}

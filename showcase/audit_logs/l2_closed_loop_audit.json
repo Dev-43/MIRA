@@ -1,0 +1,44 @@
+{
+  "session_id": "L2-SWARM-HEAL-1790425514",
+  "start_time": "2026-09-26T12:25:14Z",
+  "iterations_needed": 2,
+  "repeated_actions_avoided": 14,
+  "phases": [
+    {
+      "phase": 1,
+      "verdict": "PASS",
+      "drone1_status": "in_flight",
+      "drone2_status": "in_flight",
+      "drone3_status": "standby"
+    },
+    {
+      "phase": 2,
+      "mutation": "Drone 1 forced to standby on land",
+      "row1_text": "Drone 1\nDock 1\ndock open\nstandby"
+    },
+    {
+      "phase": 3,
+      "defect_id": "MIRA-DESYNC-DRONE-1",
+      "ground_truth": "in_flight (30m)",
+      "ui_observed": "standby (0.0m)",
+      "safety_impact": "Severe dock collision hazard & corrupted airspace awareness"
+    },
+    {
+      "phase": 4,
+      "test_file": "D:\\MIRA\\tests\\generated\\test_swarm_state_sync.py"
+    },
+    {
+      "phase": 5,
+      "healed_file": "DeviceList.tsx",
+      "patch_type": "Restored canonical store selector"
+    },
+    {
+      "phase": 6,
+      "verdict": "PASS",
+      "probe_duration_sec": 5.37,
+      "repetition_avoidance": "14 redundant whole-app crawls skipped"
+    }
+  ],
+  "status": "COMPLETED_PASSED",
+  "end_time": "2026-09-26T12:26:07Z"
+}

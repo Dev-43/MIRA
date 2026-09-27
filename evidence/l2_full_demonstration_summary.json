@@ -1,0 +1,337 @@
+{
+  "suite": "MIRA Level 2: Multi-Drone Swarm & Performance Engine",
+  "timestamp": "2026-09-26T11:31:58Z",
+  "baseline_audit": {
+    "timestamp": "2026-09-26T11:30:37Z",
+    "benchmark": {
+      "initial_render_latency_ms": 3209.6,
+      "mean_telemetry_render_latency_ms": 2750.0,
+      "max_telemetry_render_latency_ms": 4206.4,
+      "concurrent_streams_audited": 4,
+      "cross_drone_isolation": "VERIFIED_ISOLATED"
+    },
+    "drones": {
+      "drone-1": {
+        "drone_id": "drone-1",
+        "drone_name": "Drone 1",
+        "ground_truth": {
+          "status": "in_flight",
+          "height_m": 30,
+          "battery_pct": 98.5,
+          "heading_deg": 47
+        },
+        "ui_rendered": {
+          "status": "in_flight",
+          "altitude_rlt": "30.0 m",
+          "speed": "10.0 m/s",
+          "battery": "98 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": true,
+          "latency_ms": 2974.9,
+          "verdict": "SYNCHRONIZED"
+        }
+      },
+      "drone-2": {
+        "drone_id": "drone-2",
+        "drone_name": "Drone 2",
+        "ground_truth": {
+          "status": "in_flight",
+          "height_m": 30,
+          "battery_pct": 98.5,
+          "heading_deg": 134
+        },
+        "ui_rendered": {
+          "status": "in_flight",
+          "altitude_rlt": "30.0 m",
+          "speed": "10.0 m/s",
+          "battery": "98 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": true,
+          "latency_ms": 1829.6,
+          "verdict": "SYNCHRONIZED"
+        }
+      },
+      "drone-3": {
+        "drone_id": "drone-3",
+        "drone_name": "Drone 3",
+        "ground_truth": {
+          "status": "standby",
+          "height_m": 0,
+          "battery_pct": 100,
+          "heading_deg": 232
+        },
+        "ui_rendered": {
+          "status": "standby",
+          "altitude_rlt": "0.0 m",
+          "speed": "0.0 m/s",
+          "battery": "100 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": true,
+          "latency_ms": 4206.4,
+          "verdict": "SYNCHRONIZED"
+        }
+      },
+      "drone-4": {
+        "drone_id": "drone-4",
+        "drone_name": "Drone 4",
+        "ground_truth": {
+          "status": "standby",
+          "height_m": 0,
+          "battery_pct": 100,
+          "heading_deg": 318
+        },
+        "ui_rendered": {
+          "status": "standby",
+          "altitude_rlt": "0.0 m",
+          "speed": "0.0 m/s",
+          "battery": "100 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": true,
+          "latency_ms": 1989.1,
+          "verdict": "SYNCHRONIZED"
+        }
+      }
+    },
+    "desync_findings": [],
+    "status": "PASS",
+    "screenshot": "/evidence/screenshots/l2_swarm_synchronized.png"
+  },
+  "mutation_audit": {
+    "timestamp": "2026-09-26T11:31:03Z",
+    "benchmark": {
+      "initial_render_latency_ms": 3980.2,
+      "mean_telemetry_render_latency_ms": 3378.3,
+      "max_telemetry_render_latency_ms": 5314.0,
+      "concurrent_streams_audited": 4,
+      "cross_drone_isolation": "VERIFIED_ISOLATED"
+    },
+    "drones": {
+      "drone-1": {
+        "drone_id": "drone-1",
+        "drone_name": "Drone 1",
+        "ground_truth": {
+          "status": "in_flight",
+          "height_m": 30,
+          "battery_pct": 96.2,
+          "heading_deg": 47
+        },
+        "ui_rendered": {
+          "status": "standby",
+          "altitude_rlt": "0.0 m",
+          "speed": "0.0 m/s",
+          "battery": "96 %"
+        },
+        "reconciliation": {
+          "status_match": false,
+          "altitude_match": false,
+          "latency_ms": 2228.3,
+          "verdict": "DESYNCHRONIZATION_DETECTED"
+        }
+      },
+      "drone-2": {
+        "drone_id": "drone-2",
+        "drone_name": "Drone 2",
+        "ground_truth": {
+          "status": "in_flight",
+          "height_m": 30,
+          "battery_pct": 96.2,
+          "heading_deg": 134
+        },
+        "ui_rendered": {
+          "status": "in_flight",
+          "altitude_rlt": "0.0 m",
+          "speed": "0.0 m/s",
+          "battery": "95 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": false,
+          "latency_ms": 5314.0,
+          "verdict": "DESYNCHRONIZATION_DETECTED"
+        }
+      },
+      "drone-3": {
+        "drone_id": "drone-3",
+        "drone_name": "Drone 3",
+        "ground_truth": {
+          "status": "standby",
+          "height_m": 0,
+          "battery_pct": 100,
+          "heading_deg": 232
+        },
+        "ui_rendered": {
+          "status": "standby",
+          "altitude_rlt": "0.0 m",
+          "speed": "0.0 m/s",
+          "battery": "100 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": true,
+          "latency_ms": 3478.5,
+          "verdict": "SYNCHRONIZED"
+        }
+      },
+      "drone-4": {
+        "drone_id": "drone-4",
+        "drone_name": "Drone 4",
+        "ground_truth": {
+          "status": "standby",
+          "height_m": 0,
+          "battery_pct": 100,
+          "heading_deg": 318
+        },
+        "ui_rendered": {
+          "status": "standby",
+          "altitude_rlt": "0.0 m",
+          "speed": "0.0 m/s",
+          "battery": "100 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": true,
+          "latency_ms": 2492.6,
+          "verdict": "SYNCHRONIZED"
+        }
+      }
+    },
+    "desync_findings": [
+      {
+        "id": "MIRA-DESYNC-DRONE-1",
+        "severity": "CRITICAL",
+        "title": "Operational State Desynchronization on Drone 1",
+        "description": "Flight controller simulator reports drone-1 is 'in_flight' at 30m, but Cockpit UI rendered status 'standby' at 0.0 m (On Land/Standby).",
+        "ground_truth_status": "in_flight",
+        "ground_truth_height": 30,
+        "ui_status": "standby",
+        "ui_altitude": "0.0 m",
+        "safety_impact": "Severe flight collision risk: operator sees drone on land while airborne."
+      },
+      {
+        "id": "MIRA-DESYNC-DRONE-2",
+        "severity": "CRITICAL",
+        "title": "Operational State Desynchronization on Drone 2",
+        "description": "Flight controller simulator reports drone-2 is 'in_flight' at 30m, but Cockpit UI rendered status 'in_flight' at 0.0 m (On Land/Standby).",
+        "ground_truth_status": "in_flight",
+        "ground_truth_height": 30,
+        "ui_status": "in_flight",
+        "ui_altitude": "0.0 m",
+        "safety_impact": "Severe flight collision risk: operator sees drone on land while airborne."
+      }
+    ],
+    "status": "FAIL",
+    "screenshot": "/evidence/screenshots/l2_state_desync_detected.png"
+  },
+  "healed_audit": {
+    "timestamp": "2026-09-26T11:31:33Z",
+    "benchmark": {
+      "initial_render_latency_ms": 4210.0,
+      "mean_telemetry_render_latency_ms": 2730.7,
+      "max_telemetry_render_latency_ms": 3928.4,
+      "concurrent_streams_audited": 4,
+      "cross_drone_isolation": "VERIFIED_ISOLATED"
+    },
+    "drones": {
+      "drone-1": {
+        "drone_id": "drone-1",
+        "drone_name": "Drone 1",
+        "ground_truth": {
+          "status": "in_flight",
+          "height_m": 30,
+          "battery_pct": 93.5,
+          "heading_deg": 47
+        },
+        "ui_rendered": {
+          "status": "in_flight",
+          "altitude_rlt": "30.0 m",
+          "speed": "10.0 m/s",
+          "battery": "93 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": true,
+          "latency_ms": 1713.1,
+          "verdict": "SYNCHRONIZED"
+        }
+      },
+      "drone-2": {
+        "drone_id": "drone-2",
+        "drone_name": "Drone 2",
+        "ground_truth": {
+          "status": "in_flight",
+          "height_m": 30,
+          "battery_pct": 93.5,
+          "heading_deg": 134
+        },
+        "ui_rendered": {
+          "status": "in_flight",
+          "altitude_rlt": "30.0 m",
+          "speed": "10.0 m/s",
+          "battery": "93 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": true,
+          "latency_ms": 3928.4,
+          "verdict": "SYNCHRONIZED"
+        }
+      },
+      "drone-3": {
+        "drone_id": "drone-3",
+        "drone_name": "Drone 3",
+        "ground_truth": {
+          "status": "standby",
+          "height_m": 0,
+          "battery_pct": 100,
+          "heading_deg": 232
+        },
+        "ui_rendered": {
+          "status": "standby",
+          "altitude_rlt": "0.0 m",
+          "speed": "0.0 m/s",
+          "battery": "100 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": true,
+          "latency_ms": 3474.1,
+          "verdict": "SYNCHRONIZED"
+        }
+      },
+      "drone-4": {
+        "drone_id": "drone-4",
+        "drone_name": "Drone 4",
+        "ground_truth": {
+          "status": "standby",
+          "height_m": 0,
+          "battery_pct": 100,
+          "heading_deg": 318
+        },
+        "ui_rendered": {
+          "status": "standby",
+          "altitude_rlt": "0.0 m",
+          "speed": "0.0 m/s",
+          "battery": "100 %"
+        },
+        "reconciliation": {
+          "status_match": true,
+          "altitude_match": true,
+          "latency_ms": 1807.0,
+          "verdict": "SYNCHRONIZED"
+        }
+      }
+    },
+    "desync_findings": [],
+    "status": "PASS",
+    "screenshot": "/evidence/screenshots/l2_swarm_synchronized.png"
+  },
+  "demonstration_verdict": "SUCCESS - State desynchronization autonomously detected and verified."
+}

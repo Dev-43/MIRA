@@ -10,7 +10,7 @@ class TestRunnerAcceptance(unittest.TestCase):
     def test_pipeline_execution(self):
         output_dir = "evidence/test_run"
         findings = runner.run_pipeline(
-            target_url="http://localhost:4010",
+            target_url="http://127.0.0.1:4010",
             output_dir=output_dir,
             max_depth=1,
             max_pages=1,

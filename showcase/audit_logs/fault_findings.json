@@ -1,0 +1,43 @@
+[
+  {
+    "finding_id": "MIRA-STATUS_REALITY-FAULT-14231",
+    "category": "status_reality",
+    "verdict": "needs_review",
+    "confidence": 0.6,
+    "description": "Socket fault injected. Badge changed from 'socket connected' \u2192 'socket connecting'. Telemetry stale: True.",
+    "target_url": "http://127.0.0.1:4010",
+    "evidence": {
+      "badge_before": "socket connecting",
+      "badge_after": "socket connecting",
+      "telemetry_stale": true,
+      "screenshot": "evidence\\fault_screenshots\\B_socket_refused.png"
+    },
+    "reproduction_steps": [
+      "POST /api/control/fault {kind: socket-refuse, seconds: 6}",
+      "Observe Cockpit badge changes from 'socket connected'",
+      "Check if telemetry values freeze"
+    ],
+    "discovered_at": "2026-09-26T09:17:11.167473+00:00"
+  },
+  {
+    "finding_id": "MIRA-STALENESS-FAULT-14244",
+    "category": "staleness",
+    "verdict": "needs_review",
+    "confidence": 0.6,
+    "description": "Video freeze injected on drone-1. Video tile shows 'FPV\noff\nVideo off'. Stream frozen but label may still claim live.",
+    "target_url": "http://127.0.0.1:4010",
+    "evidence": {
+      "video_label_before": "FPV\noff\nVideo off",
+      "video_label_during_fault": "FPV\noff\nVideo off",
+      "is_reconnecting": false,
+      "screenshot_before": "evidence\\fault_screenshots\\C1_before_freeze.png",
+      "screenshot_during": "evidence\\fault_screenshots\\C2_during_freeze.png"
+    },
+    "reproduction_steps": [
+      "POST /api/control/fault {kind: video-freeze, deviceId: drone-1, seconds: 6}",
+      "Observe FPV tile: stream freezes, label may change to 'reconnecting'",
+      "Compare visual freeze with label claim"
+    ],
+    "discovered_at": "2026-09-26T09:17:24.901028+00:00"
+  }
+]

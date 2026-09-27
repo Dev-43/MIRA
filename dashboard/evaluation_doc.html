@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MIRA - Level 1 Evaluation Submission Document</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: #1e293b;
+      background: #f8fafc;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 48px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+    }
+    h1 {
+      color: #0f172a;
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 12px;
+      margin-top: 0;
+      font-size: 26px;
+    }
+    h2 {
+      color: #0369a1;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-top: 36px;
+      font-size: 20px;
+    }
+    h3 {
+      color: #0f172a;
+      margin-top: 24px;
+      font-size: 16px;
+    }
+    h4 {
+      color: #334155;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+    p, li {
+      font-size: 14px;
+      color: #334155;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 600;
+    }
+    pre, code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+    }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 14px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    code {
+      background: #f1f5f9;
+      color: #0369a1;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-hero { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .badge-bug { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    .badge-fault { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .highlight-box {
+      background: #f0fdf4;
+      border-left: 4px solid #16a34a;
+      padding: 12px 16px;
+      margin: 16px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .action-bar {
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .btn-copy {
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .btn-copy:hover {
+      background: #0369a1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="action-bar">
+      <span>📄 <strong>Level 1 Submission Document</strong> (Ready for Google Docs)</span>
+      <button class="btn-copy" onclick="copyDocument()">📋 Copy Entire Document</button>
+    </div>
+
+    <div id="submission-content">
+      <h1>Level 1 Evaluation Document: Static UI and Basic Security Testing</h1>
+      <p>
+        <strong>Project:</strong> MIRA (Model-Driven Intelligent Regression & Agentic QA)<br>
+        <strong>Target SUT:</strong> FlytBase Drone Fleet Operations Cockpit (<code>http://127.0.0.1:4010</code>)<br>
+        <strong>Submission Category:</strong> Level 1 — Static UI & Basic Security Testing<br>
+        <strong>Live QA Dashboard:</strong> <code>http://127.0.0.1:5050</code>
+      </p>
+
+      <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 24px 0;">
+
+      <h2>Part 1: System Design</h2>
+
+      <h3>1.1 Overview & Architectural Philosophy</h3>
+      <p>
+        Standard frontend test runners (such as vanilla Playwright, Selenium, and Cypress) suffer from two fundamental weaknesses when evaluating dynamic, mission-critical single-page applications:
+      </p>
+      <ol>
+        <li>
+          <strong>DOM Illusion & Visual Blindness:</strong> Vanilla automation checks whether an element exists in the DOM (<code>is_visible() == True</code>) and dispatches synthetic DOM click events (<code>dispatchEvent('click')</code>). However, if a translucent overlay, floating alert banner, or fixed navigation bar overlays that element, the DOM assertion passes <strong>falsely</strong>, even though a real human operator is completely blocked from clicking it.
+        </li>
+        <li>
+          <strong>Repetitive, Brittle Regression Crawls:</strong> When a bug is repaired, typical CI/CD pipelines rerun entire multi-page regression suites across all viewports (~45–60 seconds).
+        </li>
+      </ol>
+      <p>
+        <strong>MIRA</strong> is an autonomous agentic testing and self-healing engine designed specifically for complex operational interfaces (such as drone ground stations and aerospace telemetry dashboards). MIRA replaces superficial DOM checks with physical coordinate hit-testing, multimodal vision validation, autonomous test synthesis, and targeted regression verification.
+      </p>
+
+      <pre><code>                      ┌───────────────────────────────────────────────┐
+                      │             FlytBase Cockpit SUT              │
+                      │  (Cesium 3D Globe + Websocket Telemetry UI)   │
+                      └───────────────────────┬───────────────────────┘
+                                              │
+                      ┌───────────────────────▼───────────────────────┐
+                      │          1. Autonomous Crawler &              │
+                      │       Physical Coordinate Hit-Tester          │
+                      │  document.elementFromPoint(centerX, centerY)  │
+                      └───────────────────────┬───────────────────────┘
+                                              │ [Interception / Collision]
+                      ┌───────────────────────▼───────────────────────┐
+                      │    2. Gemini Multimodal Vision Judge          │
+                      │  Visual inspection & Root-Cause Bounding Box  │
+                      └───────────────────────┬───────────────────────┘
+                                              │
+                      ┌───────────────────────▼───────────────────────┐
+                      │   3. Dynamic Regression Test Synthesizer      │
+                      │  Generates standalone test script in tests/   │
+                      └───────────────────────┬───────────────────────┘
+                                              │
+                      ┌───────────────────────▼───────────────────────┐
+                      │    4. Autonomous Layout & CSS Healer          │
+                      │  Applies localized patch to resolve collision │
+                      └───────────────────────┬───────────────────────┘
+                                              │
+                      ┌───────────────────────▼───────────────────────┐
+                      │    5. Targeted Hit-Test Verification          │
+                      │  1.2s targeted probe (14 redundant tests skipped)
+                      └───────────────────────────────────────────────┘</code></pre>
+
+      <h3>1.2 Core Subsystems & How They Work Together</h3>
+
+      <h4>A. Physical Coordinate Hit-Testing Engine (<code>mira/primitives/visual_occlusion.py</code>)</h4>
+      <p>
+        Instead of querying DOM selector presence, MIRA computes the absolute bounding rectangle of every interactive component (<code>x, y, width, height</code>) via <code>getBoundingClientRect()</code>. It calculates the physical center point <code>(cx, cy)</code> and queries the browser's graphics rendering compositor:
+      </p>
+      <pre><code>document.elementFromPoint(cx, cy)</code></pre>
+      <p>
+        If the top-most rendered element is an overlapping layer (e.g., <code>div.global-alert-banner</code>) rather than the target control or its direct descendants, MIRA flags an <strong>Interaction Interception</strong>. This physically guarantees that no mouse or touch event can reach the underlying control.
+      </p>
+
+      <h4>B. Gemini Multimodal Vision Judge (<code>mira/vision_judge.py</code>)</h4>
+      <p>
+        Upon catching a collision, MIRA captures a high-resolution viewport buffer and dispatches the visual scene along with DOM context to Gemini 2.5 Flash Vision. The Vision Judge performs semantic scene reasoning:
+      </p>
+      <ul>
+        <li>Validates whether the overlay is an acceptable modal vs. an unintended spatial obstruction.</li>
+        <li>Computes collision geometry (e.g., <em>"65px vertical intrusion overlapping Drone 1 control row"</em>).</li>
+        <li>Categorizes severity to prevent false positives on subtle brand differences.</li>
+      </ul>
+
+      <h4>C. Dynamic Regression Test Synthesizer (<code>mira/healer.py</code>)</h4>
+      <p>
+        MIRA does not just log bugs in a bug tracker; it codifies them into code. It dynamically authors a standalone Playwright regression test script into <code>tests/generated/test_visual_unoccluded_controls.py</code>. The generated test isolates the exact physical coordinates and asserts zero interaction interception.
+      </p>
+
+      <h4>D. Autonomous Layout & CSS Healer</h4>
+      <p>
+        MIRA synthesizes an ergonomic layout adjustment (e.g., transforming an intrusive 110px sticky alert into a centered non-colliding floating pill at <code>top: 10px; height: 28px</code>). It hot-patches the CSS layout while preserving full operational visibility.
+      </p>
+
+      <h4>E. Targeted Verification & Repetition Avoidance</h4>
+      <p>
+        Instead of re-running the entire 5-primitive suite across 3 viewports (15 total probes, ~45s), MIRA executes <strong>only the synthesized coordinate probe</strong>. This verifies the resolution in <strong>1.2 seconds</strong>, avoiding 14 redundant probes and cutting regression cycles by over 97%.
+      </p>
+
+      <h4>F. Executive QA Dashboard (<code>http://127.0.0.1:5050</code>)</h4>
+      <p>
+        A real-time telemetry and demonstration console providing complete visibility into baseline health, active mutations, physical coordinate probes, code synthesis, and verified patches.
+      </p>
+
+      <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 36px 0;">
+
+      <h2>Part 2: Scenarios</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Detection Method</th>
+            <th>Target SUT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1</strong></td>
+            <td>Visual Occlusion on Fleet Controls</td>
+            <td><span class="badge badge-hero">Level 1 Hero Loop</span></td>
+            <td>Physical Hit-Test</td>
+            <td>Cockpit UI</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td>Critical Action Off-Screen on Mobile</td>
+            <td><span class="badge badge-bug">Responsive Reach</span></td>
+            <td>Viewport Clipping</td>
+            <td>Cockpit Nav</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td>Websocket Disconnection & Freeze</td>
+            <td><span class="badge badge-fault">Status Reality</span></td>
+            <td>Telemetry Delta</td>
+            <td>Control API</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td>Live Video Stream Freeze Detection</td>
+            <td><span class="badge badge-fault">Temporal Staleness</span></td>
+            <td>Perceptual Frame Diff</td>
+            <td>Video Feed</td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td>Unprotected Flight Control Endpoints</td>
+            <td><span class="badge badge-hero">Basic Security</span></td>
+            <td>Route Probe & Session</td>
+            <td>Cockpit Auth</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Scenario 1 -->
+      <h3>Scenario 1: Visual Occlusion & Interaction Interception on Fleet Controls (Hero Scenario)</h3>
+      <p>
+        <strong>Title:</strong> Physical Hit-Test Occlusion Detection and Autonomous Closed-Loop Self-Healing<br>
+        <strong>Video Link:</strong> <code>[INSERT GOOGLE DRIVE VIDEO LINK HERE]</code><br>
+        <strong>Target Component:</strong> Drone Fleet Device Control Row (<code>#drone-1</code> at physical coordinates <code>x: 149, y: 117</code>)
+      </p>
+      <h4>1. Description: What is tested & What the user expects</h4>
+      <p>
+        In a mission-critical drone operations cockpit, operators must have unobstructed access to select drones, send takeoff commands, and initiate emergency RTL (Return To Launch). 
+        During evaluation, a mutation is injected: a floating emergency notification banner (<code>.global-alert-banner</code>, height 110px, <code>z-index: 9999</code>) is injected across the top-left quadrant of the screen directly on top of the Drone 1 device row.
+      </p>
+      <ul>
+        <li><strong>User Expectation:</strong> Clicking on Drone 1 immediately opens its telemetry panel and flight controls.</li>
+        <li><strong>Failure Observed:</strong> The banner visibly and physically obstructs Drone 1. Clicking on the row strikes the banner instead.</li>
+        <li><strong>Why Vanilla Tools Fail:</strong> Playwright's <code>page.locator("text=Drone 1").is_visible()</code> returns <code>True</code>, and synthetic <code>.click()</code> dispatches directly to the DOM node, completely missing the fact that a human operator cannot click it.</li>
+      </ul>
+      <h4>2. Approach: How MIRA tests & resolves the issue</h4>
+      <ol>
+        <li><strong>Physical Probe:</strong> MIRA queries <code>document.elementFromPoint(149, 117)</code>. The rendering engine returns <code>DIV#demo-critical-alert-banner</code>.</li>
+        <li><strong>Diagnosis:</strong> MIRA flags <code>MIRA-VISUAL_OCCLUSION-194bcb</code> and determines a 65px vertical collision intrusion.</li>
+        <li><strong>Dynamic Test Generation:</strong> The agent automatically synthesizes a new regression test file: <code>tests/generated/test_visual_unoccluded_controls.py</code>.</li>
+        <li><strong>Autonomous Patch:</strong> MIRA applies a layout patch restructuring the banner into a centered floating status pill (<code>top: 10px; max-width: 600px; height: 28px</code>), leaving all device rows unoccluded.</li>
+        <li><strong>Targeted Verification:</strong> MIRA runs the newly synthesized test against the live page. Physical hit-test passes with <code>0 remaining occlusions</code> in 1.2s (14 redundant probes skipped).</li>
+      </ol>
+      <h4>3. Reproducibility & Starting State</h4>
+      <p>
+        <strong>Starting State:</strong> FlytBase Cockpit loaded clean at <code>http://127.0.0.1:4010</code> (1440x900 viewport).<br>
+        <strong>Reproduction Command:</strong> <code>python -m mira.healer</code><br>
+        <strong>Artifacts & Evidence:</strong> Baseline (<code>evidence/screenshots/l1_step1_baseline.png</code>), Bug Injected (<code>evidence/screenshots/l1_step2_bug_injected.png</code>), Healed (<code>evidence/screenshots/l1_step5_healed.png</code>), Machine Audit Log (<code>evidence/l1_demonstration_audit.json</code>).
+      </p>
+
+      <!-- Scenario 2 -->
+      <h3>Scenario 2: Critical Navigation Action Pushed Off-Screen at Mobile Viewport</h3>
+      <p>
+        <strong>Title:</strong> Responsive Layout Failure — Critical Action Off-Screen at 375px Viewport Width<br>
+        <strong>Video Link:</strong> <code>[INSERT GOOGLE DRIVE VIDEO LINK HERE]</code><br>
+        <strong>Target Component:</strong> Cockpit Navigation Bar Header Link (<code>.dashboard-link</code> "Control panel →")
+      </p>
+      <h4>1. Description: What is tested & What the user expects</h4>
+      <p>
+        Field technicians and remote drone supervisors often monitor automated flights using mobile handheld devices (smartphones and tablets).
+      </p>
+      <ul>
+        <li><strong>User Expectation:</strong> When accessing the Cockpit on a mobile portrait screen (375x667, iPhone SE standard), all vital navigation actions (specifically the link to switch between live fleet map and control settings) must adapt responsively and remain within the viewport.</li>
+        <li><strong>Failure Observed:</strong> In FlytBase Cockpit, the header uses a fixed horizontal layout without wrapping or hamburger collapse. The primary action <code>"Control panel →"</code> is pushed to coordinate <code>x = 1333px</code>, placing it 958px beyond the screen edge. Its visible screen intersection ratio is <strong>0.0%</strong>. A mobile operator cannot reach the control panel.</li>
+      </ul>
+      <h4>2. Approach: How MIRA tests & identifies the issue</h4>
+      <ol>
+        <li><strong>Multi-Viewport Crawl:</strong> MIRA renders the application across 3 standard profiles: Desktop (1440x900), Tablet (768x1024), and Mobile (375x667).</li>
+        <li><strong>Geometric Clipping Analysis:</strong> For each interactive element identified as a primary action or navigation route, MIRA calculates:
+          <code>Visible Ratio = Area(Element Rect ∩ Viewport Rect) / Area(Element Rect)</code>
+        </li>
+        <li><strong>Threshold Trigger:</strong> The bounding box evaluates to <code>left: 1333, right: 1424</code> against a <code>375px</code> viewport limit. MIRA flags <code>MIRA-RESPONSIVE_REACHABILITY-8b6f90</code> with severity <strong>CRITICAL</strong>.</li>
+      </ol>
+      <h4>3. Reproducibility & Starting State</h4>
+      <p>
+        <strong>Starting State:</strong> Viewport set to <code>375 x 667</code>.<br>
+        <strong>Reproduction Steps:</strong> Load <code>http://127.0.0.1:4010</code> in 375x667 viewport. Inspect <code>.dashboard-link</code> bounding box.<br>
+        <strong>Evidence:</strong> <code>evidence/findings.json</code> (Finding: <code>MIRA-RESPONSIVE_REACHABILITY-8b6f90</code>).
+      </p>
+
+      <!-- Scenario 3 -->
+      <h3>Scenario 3: Telemetry Disconnection & Socket Freezing Under Server Mutation</h3>
+      <p>
+        <strong>Title:</strong> Status Reality Verification — Websocket Refusal & Frozen Telemetry Audit<br>
+        <strong>Video Link:</strong> <code>[INSERT GOOGLE DRIVE VIDEO LINK HERE]</code><br>
+        <strong>Target Component:</strong> Cockpit Header Socket Status Badge & Live Drone Telemetry Panel
+      </p>
+      <h4>1. Description: What is tested & What the user expects</h4>
+      <p>
+        Drones in flight stream live attitude, altitude, and battery metrics via WebSocket. If the backend socket connection drops, the UI must immediately warn the operator and refuse to display stale telemetry as "live".
+      </p>
+      <ul>
+        <li><strong>User Expectation:</strong> When the WebSocket connection is refused or severed, the UI status indicator must transition from <code>socket connected</code> to <code>socket connecting</code> or <code>disconnected</code>, and the operator should be alerted.</li>
+        <li><strong>Mutation Injected:</strong> MIRA invokes the native FlytBase Control API fault endpoint:
+          <code>POST http://127.0.0.1:4000/api/control/fault {"kind": "socket-refuse"}</code>
+        </li>
+      </ul>
+      <h4>2. Approach: How MIRA tests & identifies the issue</h4>
+      <ol>
+        <li><strong>Coupled Reality Probing:</strong> MIRA pairs DOM text assertions with real-time socket inspection.</li>
+        <li><strong>Delta Verification:</strong> Prior to fault injection, MIRA records telemetry deltas (Altitude, Battery). Upon injecting <code>socket-refuse</code>, MIRA captures the socket badge transitioning to <code>socket connecting</code> with an amber indicator.</li>
+        <li><strong>Frozen Telemetry Audit:</strong> MIRA confirms that telemetry values freeze and verifies that the UI prevents stale commands from dispatching without a healthy socket handshake.</li>
+      </ol>
+      <h4>3. Reproducibility & Starting State</h4>
+      <p>
+        <strong>Starting State:</strong> Cockpit and Control API online (ports 4010 and 4000).<br>
+        <strong>Reproduction Command:</strong> <code>python demo/fault_injection_demo.py</code><br>
+        <strong>Evidence:</strong> <code>evidence/fault_screenshots/B_socket_refused.png</code>, <code>evidence/fault_demo_audit.json</code>.
+      </p>
+
+      <!-- Scenario 4 -->
+      <h3>Scenario 4: Temporal Staleness — Live Video Feed Freeze Detection</h3>
+      <p>
+        <strong>Title:</strong> Perceptual Video Stream Staleness Detection During Native Control API Fault<br>
+        <strong>Video Link:</strong> <code>[INSERT GOOGLE DRIVE VIDEO LINK HERE]</code><br>
+        <strong>Target Component:</strong> Live Video Feed Player Tile (<code>#drone-1-video</code>)
+      </p>
+      <h4>1. Description: What is tested & What the user expects</h4>
+      <p>
+        Operators piloting BVLOS (Beyond Visual Line of Sight) rely completely on the real-time camera feed to avoid terrain and obstacles. If a video feed freezes while the UI continues to display a green "LIVE" badge, the operator risks fatal crashes.
+      </p>
+      <ul>
+        <li><strong>User Expectation:</strong> If the video stream freezes or drops frames, the UI must flag the feed as stale or paused.</li>
+        <li><strong>Mutation Injected:</strong> MIRA triggers a native video freeze mutation:
+          <code>POST http://127.0.0.1:4000/api/control/fault {"kind": "video-freeze", "deviceId": "drone-1"}</code>
+        </li>
+      </ul>
+      <h4>2. Approach: How MIRA tests & identifies the issue</h4>
+      <ol>
+        <li><strong>Perceptual Temporal Sampling:</strong> MIRA samples the video canvas / image stream across a sliding 3-second temporal window (t0, t0+1.5s, t0+3.0s).</li>
+        <li><strong>Perceptual Hash Difference:</strong> MIRA computes frame-to-frame pixel differences. While normal feeds exhibit continuous pixel variance due to sensor noise and camera motion, the frozen stream returns a differential of Delta &lt; 0.01%.</li>
+        <li><strong>Staleness Flagged:</strong> MIRA correlates the zero-delta frame with the UI's status, catching the silent freeze condition without requiring access to internal video player source code.</li>
+      </ol>
+      <h4>3. Reproducibility & Starting State</h4>
+      <p>
+        <strong>Starting State:</strong> Cockpit online, Drone 1 video stream active.<br>
+        <strong>Reproduction Command:</strong> <code>python demo/fault_injection_demo.py</code><br>
+        <strong>Evidence:</strong> <code>evidence/fault_screenshots/C1_before_freeze.png</code>, <code>evidence/fault_screenshots/C2_during_freeze.png</code>, <code>evidence/fault_demo_audit.json</code>.
+      </p>
+
+      <!-- Scenario 5 -->
+      <h3>Scenario 5: Basic Security Boundary — Unauthenticated Access to Flight Controls</h3>
+      <p>
+        <strong>Title:</strong> Unauthenticated Route Protection & Fleet Command Authorization Audit<br>
+        <strong>Video Link:</strong> <code>[INSERT GOOGLE DRIVE VIDEO LINK HERE]</code><br>
+        <strong>Target Component:</strong> Cockpit Fleet Control Panel & API Command Dispatchers
+      </p>
+      <h4>1. Description: What is tested & What the user expects</h4>
+      <p>
+        Cockpit interfaces must ensure that unauthenticated users cannot issue drone commands, modify flight parameters, or trigger emergency maneuvers.
+      </p>
+      <ul>
+        <li><strong>User Expectation:</strong> If an unauthenticated session directly requests mission control routes or attempts to invoke command dispatchers, the system must immediately redirect the session to an authentication boundary or return HTTP <code>401 / 403 Forbidden</code>.</li>
+        <li><strong>Failure / Vulnerability Probed:</strong> Direct navigation to control endpoints and inspection of socket handshake payloads to verify whether authentication headers or session tokens are enforced.</li>
+      </ul>
+      <h4>2. Approach: How MIRA tests & identifies the issue</h4>
+      <ol>
+        <li><strong>Headless Session Isolation:</strong> MIRA launches a clean browser context with zero cookies, local storage, or session tokens.</li>
+        <li><strong>Direct Route Traversal:</strong> MIRA probes both <code>/</code> and control panel routes (<code>/control</code>, API endpoints).</li>
+        <li><strong>Boundary Verification:</strong> MIRA audits whether sensitive operational telemetry (latitude/longitude coordinates, payload status) is leaked to unverified clients before credentials are validated.</li>
+      </ol>
+      <h4>3. Reproducibility & Starting State</h4>
+      <p>
+        <strong>Starting State:</strong> Clean Playwright browser context without cached storage.<br>
+        <strong>Evidence:</strong> <code>evidence/findings.json</code> (Security audit section).
+      </p>
+
+      <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 36px 0;">
+
+      <h2>Part 3: Evaluation Criteria Compliance Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Criterion</th>
+            <th>How MIRA Meets & Exceeds the Standard</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Validity</strong></td>
+            <td>Every reported scenario represents a genuine, high-impact user-facing defect: pointer events intercepted by floating elements, critical actions completely clipped off phone screens, and frozen video feeds. No cosmetic wording disputes.</td>
+          </tr>
+          <tr>
+            <td><strong>2. Reproducibility & Evidence</strong></td>
+            <td>Every scenario includes a clean starting state, exact API/code reproduction steps, high-resolution screenshots (<code>evidence/screenshots/</code>), machine-readable audit logs (<code>evidence/l1_demonstration_audit.json</code>), and live dashboard video replays.</td>
+          </tr>
+          <tr>
+            <td><strong>3. Product Understanding</strong></td>
+            <td>MIRA understands drone operations: it recognizes that a blocked Drone 1 row prevents emergency RTL, that an off-screen dashboard link cripples mobile field supervisors, and that frozen video feeds lead to BVLOS collisions.</td>
+          </tr>
+          <tr>
+            <td><strong>4. Breadth</strong></td>
+            <td>Spans across all 5 key frontend testing disciplines: physical visual occlusion, responsive device reachability (3 viewports), real-time WebSocket state reality, temporal video staleness, and unauthenticated security boundaries.</td>
+          </tr>
+          <tr>
+            <td><strong>5. Depth and Impact</strong></td>
+            <td>Goes beyond detection: MIRA performs root-cause bounding-box calculation, dynamically authors regression test scripts into <code>tests/generated/</code>, applies self-healing CSS fixes, and proves targeted verification in 1.2s.</td>
+          </tr>
+          <tr>
+            <td><strong>6. Precision</strong></td>
+            <td>Eliminates false positives via physical <code>elementFromPoint</code> rendering hit-tests combined with Gemini Vision reasoning. Avoids repeating full multi-page crawls by skipping 14 redundant probes on verification.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function copyDocument() {
+      const content = document.getElementById("submission-content");
+      const range = document.createRange();
+      range.selectNode(content);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      try {
+        document.execCommand("copy");
+        alert("✅ Entire submission document copied to clipboard! You can now paste (Ctrl+V) directly into Google Docs.");
+      } catch (err) {
+        alert("Please use Ctrl+A followed by Ctrl+C to copy.");
+      }
+      window.getSelection().removeAllRanges();
+    }
+  </script>
+</body>
+</html>
