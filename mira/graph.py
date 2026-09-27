@@ -38,7 +38,7 @@ class Neo4jDriverWrapper:
     def __init__(self) -> None:
         self.uri = os.getenv("NEO4J_URI", "bolt://127.0.0.1:7687")
         self.username = os.getenv("NEO4J_USERNAME") or os.getenv("NEO4J_USER") or "neo4j"
-        self.password = os.getenv("NEO4J_PASSWORD", "95175310")
+        self.password = os.getenv("NEO4J_PASSWORD", "")
         self._driver = None
         self._is_live: Optional[bool] = None
 
